@@ -1,0 +1,91 @@
+#!/bin/bash
+##
+## EPITECH PROJECT, 2019
+## bdsh
+## File description:
+## shell script
+##
+
+FILE=""
+CREATE=""
+DATA=""
+REQUEST=""
+TMP="tmp"
+
+usage (){
+    echo "Usage: ./bdsh [OPTION]... [COMMAND] [REQUEST]"
+}
+
+if [[ "$1" == "-h" ]]; then
+    usage
+elif [[ "$1" == "-j" ]]; then
+     echo "pas de mayonaise pas de ketchup"
+elif [[ "$1"  == "-f" ]]; then
+     if [ $# > 1 ]; then
+         shift
+     fi
+     FILE=$1
+fi
+if [ $# > 1 ]; then
+    shift
+fi
+
+my_create_table() {
+    touch $TMP
+    echo $DATA >> $TMP
+    sed -i -e 's/,/",\n    "/g' $TMP
+    DATA=`head $TMP`
+    rm $TMP
+    sed -i '$d' $FILE
+    sed -i '$d' $FILE
+    echo "  ]," >> $FILE
+    echo "  \"desc_$CREATE\": [" >> $FILE
+    echo "    $DATA" >> $FILE
+    echo "  ]" >> $FILE
+    echo "}" >> $FILE;
+}
+
+my_describe() {
+    REQUEST="desc_$REQUEST"
+    LINE_START=$(grep -n "$REQUEST" $FILE | cut -d ':' -f 1)
+    if [ -z $LINE_START ]; then
+        exit 1
+    fi
+    LINE_END=$(tail -n+$LINE_START $FILE | grep -n "]" | cut -d ':' -f 1 | head -1)
+    LINE_START=`expr $LINE_START + 1 `
+    LINE_END=`expr $LINE_END - 2 `
+    tail -n+$LINE_START $FILE | head -n$LINE_END | sed 's/[", \t] *//g'
+}
+
+if [[ "$1" == "create" ]]; then
+    if [ -n $2 ]; then
+        if [[ "$2" == "database" ]]; then
+            if [ -n $3 ]; then
+                if [ -f $FILE ]; then
+                    echo "[ERROR] File already exist"
+                    exit 84
+                fi
+                touch $FILE
+                echo "{" >> $FILE
+                echo "}" >> $FILE
+                if [ ! -f $FILE ]; then
+                    echo "[ERROR] File didn't create correctly"
+                    exit 84
+                fi
+            fi
+        elif [[ "$2" == table ]] && [ -n $3 ] && [ -n $4 ]; then
+            CREATE=$3
+            DATA="\"$4\""
+            my_create_table
+        fi
+    fi
+elif [[ "$1" == "describe" ]] && [ -n $2 ]; then
+    if [ -n $2 ]; then
+        REQUEST=$2
+    else
+        echo "[ERROR] bad table argument"
+        usage
+        exit 84
+    fi
+    my_describe
+fi
