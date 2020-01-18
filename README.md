@@ -1,19 +1,22 @@
 # SHL_2018_shell
 Second year mini project in Shell Scripting in which the goal is to write a shell script that allows to manage a database in a json file. It can create table, insert-update-remove data, run query ...
 
-USAGE : ./bdsh [OPTION]... [COMMAND] [REQUEST]
+USAGE :
+
+	./bdsh [OPTION]... [COMMAND] [REQUEST]
 
 OPTION:
-  -h				display usage
-  -f FILE			json database file
-  -j                json formated output for select command
 
-COMMAND and REQUEST:
-	create		create database
-			Exemple: 
-				./bdsh -f file.json create database
-				./bdsh -f file.json create table user id,firstname,lastname
-				./bdsh -f file.json create table age id,age
+	  -h				display usage
+	  -f FILE			json database file
+	  -j                json formated output for select command
+
+	COMMAND and REQUEST:
+		create		create database
+				Exemple: 
+					./bdsh -f file.json create database
+					./bdsh -f file.json create table user id,firstname,lastname
+					./bdsh -f file.json create table age id,age
 
 	insert		insert data in database
 			Exemple:
@@ -55,10 +58,10 @@ COMMAND and REQUEST:
         
  NOTE :
  
- - Shell must be /bin/sh or /bin/bash (#shebang)
- 
- - Database file is a json file correctly formated.
-	Json file must contain 2 arrays for a table :
-		desc_$table : array with field list of table
-		data_$table : array with list : field:value
-		see sample.json in subject directory
+	 - Shell must be /bin/sh or /bin/bash (#shebang)
+
+	 - Database file is a json file correctly formated.
+		Json file must contain 2 arrays for a table :
+			desc_$table : array with field list of table
+			data_$table : array with list : field:value
+			see sample.json in subject directory
