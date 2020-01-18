@@ -5,20 +5,23 @@ USAGE :
 
 	./bdsh [OPTION]... [COMMAND] [REQUEST]
 
-OPTION:
+OPTIONS :
 
-	  -h				display usage
-	  -f FILE			json database file
-	  -j                json formated output for select command
+	-h		display usage
+	-f FILE		json database file
+	-j              json formated output for select command
 
 	COMMAND and REQUEST:
-		create		create database
+	
+	create		create database
+	
 				Exemple: 
 					./bdsh -f file.json create database
 					./bdsh -f file.json create table user id,firstname,lastname
 					./bdsh -f file.json create table age id,age
 
 	insert		insert data in database
+	
 			Exemple:
 				./bdsh -f file.json insert user id=1,firstname=John,lastname=SMITH
 				./bdsh -f file.json insert user id=4,firstname=Robert\ John,lastname=WILLIAMS
@@ -29,6 +32,7 @@ OPTION:
 				./bdsh -f file.json insert age id=1,age=42
 
 	describe      describe table structure
+	
 			Exemple:
 				./bdsh -f file.json describe user
 				id
@@ -36,6 +40,7 @@ OPTION:
 				lastname
 
 	select		display data from database
+	
 			Exemple:
 				./bdsh -f file.json select user firstname,lastname
 				firstname    | lastname
@@ -56,11 +61,12 @@ OPTION:
 				SMITH     | Laura
 				WILLIAMS  | Robert John
         
- NOTE :
+ NOTES :
  
 	 - Shell must be /bin/sh or /bin/bash (#shebang)
 
 	 - Database file is a json file correctly formated.
+	 
 		Json file must contain 2 arrays for a table :
 			desc_$table : array with field list of table
 			data_$table : array with list : field:value
